@@ -1,14 +1,9 @@
 import pygame, sys
 from naveColibri import NaveColibri
 from fondo import Fondo
-
-
-
-
+import funciones as fun
 ''' Imagen icono ventana  '''
 imagenIcono = pygame.image.load("./secuestro.png")
-
-
 FPS = 8
 
 def run_game():
@@ -18,7 +13,6 @@ def run_game():
 
     ''' creación de la pantalla, con las dimensiones propuestas en size '''
     windth, heigth = 900, 600
-    x,y = 0,0
     screen = pygame.display.set_mode((windth, heigth))
 
     '''Caption -> nombre ventana'''
@@ -38,17 +32,10 @@ def run_game():
     moving_sprites.add(fondo_moving)
 
     while True:
+        # metodo que obtiene las solicitudes del usurario
+        fun.check_eventos(naveColibri)
+        naveColibri.update()
+        # metodo de creacion visual
+        fun.actualizaciones_pantalla(moving_sprites,screen,FPS,velocidad,naveColibri)
 
-        for eventos in pygame.event.get():
-            # Es lo que especifica la velocidad del bucle de juego
-
-            """si el usurio presiona cerrar entonces sys cierra el programa"""
-            if eventos.type == pygame.QUIT:
-                sys.exit()
-        moving_sprites.draw(screen)
-        moving_sprites.update()
-        velocidad.tick(FPS)
-
-        naveColibri.blitme()
-        pygame.display.update()
 run_game()
